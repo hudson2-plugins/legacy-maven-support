@@ -1,0 +1,42 @@
+<!-- **************************************************************************
+#
+# Copyright  (c) 2004-2009 Oracle Corporation.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors: 
+#
+#    Kohsuke Kawaguchi
+#        
+#
+#************************************************************************** --> 
+
+
+<!--
+  list disabled modules
+-->
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <l:layout title="${it.name}">
+    <st:include page="sidepanel.jelly" />
+    <l:main-panel>
+      <h1>${%title(it.name)}</h1>
+      <p>
+        ${%description}
+      </p>
+
+      <j:choose>
+        <j:otherwise>
+          <t:projectView jobs="${it.getDisabledModules(true)}" showViewTabs="${true}">
+            <l:tabBar>
+              <l:tab name="${%Modules}" active="${false}" href="./modules" />
+              <l:tab name="${%Disabled}" active="${true}" href="./disabled" />
+            </l:tabBar>
+          </t:projectView>
+        </j:otherwise>
+      </j:choose>
+    </l:main-panel>
+  </l:layout>
+</j:jelly>

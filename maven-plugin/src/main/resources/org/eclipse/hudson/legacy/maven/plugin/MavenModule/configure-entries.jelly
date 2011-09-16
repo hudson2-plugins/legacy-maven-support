@@ -1,0 +1,36 @@
+<!-- **************************************************************************
+#
+# Copyright  (c) 2004-2009 Oracle Corporation.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors: 
+#
+#    Kohsuke Kawaguchi
+#        
+#
+#************************************************************************** --> 
+
+
+<!--
+  Config page
+-->
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:p="/lib/hudson/project">
+  <p:config-trigger />
+
+  <f:section title="${%Build}">
+    <f:entry title="${%Goals}" help="/plugin/maven-plugin/module-goals.html">
+      <f:textbox name="goals" value="${it.userConfiguredGoals}"/>
+    </f:entry>
+  </f:section>
+
+  <j:invokeStatic var="reporters" className="org.eclipse.hudson.legacy.maven.plugin.MavenReporters" method="getConfigurableList" />
+  <j:if test="${!empty(reporters)}">
+    <f:descriptorList title="${%Build Settings}"
+                      descriptors="${reporters}"
+                      instances="${it.reporters.toMap()}" />
+  </j:if>
+</j:jelly>

@@ -1,0 +1,52 @@
+<!-- **************************************************************************
+#
+# Copyright  (c) 2004-2009 Oracle Corporation.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors: 
+#
+#    Kohsuke Kawaguchi, Eric Lefevre-Ardant, Seiji Sogabe
+#        
+#
+#************************************************************************** --> 
+
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:test="/lib/test">
+  <l:layout permission="${it.REDEPLOY}">
+    <st:include it="${it.parent}" page="sidepanel.jelly" />
+    <l:side-panel>
+      <st:include it="${it.historyWidget}" page="index.jelly" />
+    </l:side-panel>
+    <l:main-panel>
+      <h1>
+        <img src="${imagesURL}/48x48/redo.gif" width="48" height="48" alt="" />
+        ${%Redeploy Artifacts}
+      </h1>
+
+      <j:choose>
+        <!-- A deployment is in progress -->
+        <j:when test="${it.workerThread!=null}">
+          <st:include page="log.jelly" />
+        </j:when>
+
+        <!-- No deployment is in progress. Display the form. -->
+        <j:otherwise>
+          <p>
+            ${%This page allows you to redeploy the build artifacts to a repository after the fact.}
+          </p>
+
+          <f:form method="post" action="redeploy">
+            <st:include page="/hudson/maven/RedeployPublisher/config.jelly" />
+            <f:block>
+              <f:submit value="${%OK}" style="margin-top:1em;" />
+            </f:block>
+          </f:form>
+        </j:otherwise>
+      </j:choose>
+    </l:main-panel>
+  </l:layout>
+</j:jelly>

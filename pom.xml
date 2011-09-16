@@ -1,0 +1,178 @@
+<!-- **************************************************************************
+#
+# Copyright (c) 2004-2009 Oracle Corporation.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors: 
+#
+#   n Microsystems, Inc., Kohsuke Kawaguchi, Daniel Dyer, Stephen Connolly Permission is hereby granted, 
+#        
+#
+#************************************************************************** --> 
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.eclipse.hudson.main</groupId>
+    <artifactId>hudson</artifactId>
+    <version>2.1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <!-- TODO: Should really give these modules their own groupId -->
+
+  <artifactId>hudson-maven-legacy</artifactId>
+  <packaging>pom</packaging>
+  <name>Hudson :: Maven (legacy)</name>
+  <description>Hudson Legacy Maven Integration</description>
+
+  <properties>
+    <mavenVersion>3.0.2</mavenVersion>
+    <maven.version>${mavenVersion}</maven.version>
+    <aetherVersion>${aether.version}</aetherVersion>
+    <wagon.version>1.0-beta-7</wagon.version>
+    <wagonVersion>${wagon.version}</wagonVersion><!--backward compatible property-->
+    <commons-httpclient.version>4.1.2</commons-httpclient.version>
+    <plexus-classworlds.version>2.3</plexus-classworlds.version>
+  </properties>
+
+  <modules>
+    <module>maven-agent</module>
+    <module>maven-interceptor</module>
+    <module>maven-plugin</module>
+    <module>maven3-agent</module>
+    <module>maven3-interceptor</module>
+  </modules>
+
+  <!--
+  NOTE: DM here is mvn3 specific, and will be picked up by the maven 2 support as well, which may cause problems.
+  NOTE: Should have a hudson-maven3 and hudson-maven2 module to keep these separate.
+  NOTE: Also should not need this many DM bits, to include the proper Maven dependencies.
+  -->
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-core</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-compat</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-aether-provider</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-embedder</artifactId>
+        <version>${maven.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.aether</groupId>
+        <artifactId>aether-api</artifactId>
+        <version>${aether.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.aether</groupId>
+        <artifactId>aether-impl</artifactId>
+        <version>${aether.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.aether</groupId>
+        <artifactId>aether-spi</artifactId>
+        <version>${aether.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.aether</groupId>
+        <artifactId>aether-connector-wagon</artifactId>
+        <version>${aether.version}</version>
+      </dependency>
+
+      <dependency>
+        <!-- default dependency to 2.0.2 confuses IntelliJ. Otherwise this value doesn't really affect build or runtime. -->
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>${commons-httpclient.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-http-lightweight</artifactId>
+        <version>${wagon.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-file</artifactId>
+        <version>${wagon.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-provider-api</artifactId>
+        <version>${wagon.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.sonatype.sisu</groupId>
+        <artifactId>sisu-inject-plexus</artifactId>
+        <version>${sisuInject.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-classworlds</artifactId>
+        <version>${plexus-classworlds.version}</version>
+      </dependency>
+
+      <!-- INTERNAL -->
+
+      <dependency>
+        <groupId>org.eclipse.hudson.main</groupId>
+        <artifactId>maven-agent</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.hudson.main</groupId>
+        <artifactId>maven-interceptor</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.hudson.main</groupId>
+        <artifactId>maven3-agent</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.hudson.main</groupId>
+        <artifactId>maven3-interceptor</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.hudson.main</groupId>
+        <artifactId>maven-plugin</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>

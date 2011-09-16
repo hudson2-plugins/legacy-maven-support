@@ -1,0 +1,26 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2009 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#         Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+<div>
+  チェックすると、このプロジェクトのPOMを解析して、依存するスナップショットがこのHudson上でビルドされるかどうかチェックします。
+  もしビルドされるなら、依存するジョブがビルドされスナップショットのjarファイルが作成されるときはいつでも、
+  このプロジェクトのビルドをスケジュールするように、Hudsonは依存性を設定します。
+
+  <p>
+  この機能は、自動的に継続インテグレーションを実行するのに便利です。Hudsonは、POMの&lt;plugin>や&lt;extension>と同様に、
+  &lt;dependency>からもスナップショットの依存性をチェックします。
+
+  <p>
+  もし動作に問題があるようでしたら、このオプションのチェックをはずしてください。
+</div>

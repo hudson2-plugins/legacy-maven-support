@@ -1,0 +1,30 @@
+<!-- **************************************************************************
+#
+# Copyright  (c) 2004-2009 Oracle Corporation.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors: 
+#
+#    Kohsuke Kawaguchi, Daniel Dyer
+#        
+#
+#************************************************************************** --> 
+
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <j:if test="${it.hasDisabledModule()}">
+    <l:isAdmin>
+      <l:task icon="images/24x24/delete-document.gif" href="deleteAllDisabledModules" title="${%Delete All Disabled Modules}" />
+    </l:isAdmin>
+  </j:if>
+  <!-- Icon TBD -->
+  <j:set var="url" value="${h.getNearestAncestorUrl(request,it)}"/>
+  <l:task icon="images/24x24/document.gif" href="${url}/modules" title="${%Modules}" />
+
+  <!-- include super class definition -->
+  <st:include page="/hudson/model/Actionable/actions.jelly" />
+</j:jelly>

@@ -1,0 +1,26 @@
+<!-- **************************************************************************
+#
+# Copyright  (c) 2004-2009 Oracle Corporation.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors: 
+#
+#    Kohsuke Kawaguchi
+#        
+#
+#************************************************************************** --> 
+
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:test="/lib/test">
+  <l:layout permission="${app.ADMINISTER}" title="${%Environment Variables} - Maven Process for ${it.owner}">
+    <st:include page="sidepanel.jelly" />
+    <l:main-panel>
+      <h1>${%Environment Variables}</h1>
+      <t:propertyTable items="${it.envVars}" />
+    </l:main-panel>
+  </l:layout>
+</j:jelly>

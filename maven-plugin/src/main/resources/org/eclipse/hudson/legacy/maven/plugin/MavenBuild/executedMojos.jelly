@@ -1,0 +1,74 @@
+<!-- **************************************************************************
+#
+# Copyright  (c) 2004-2009 Oracle Corporation.
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors: 
+#
+#    Kohsuke Kawaguchi
+#        
+#
+#************************************************************************** --> 
+
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <l:layout title="${it.fullDisplayName} Execution Record">
+    <st:include page="sidepanel.jelly" />
+    <l:main-panel>
+      <h1>${%Executed Mojos}</h1>
+
+      <j:choose>
+        <j:when test="${it.building}">
+          <div>
+            ${%Build in progress.}
+          </div>
+        </j:when>
+        <j:when test="${empty(it.executedMojos)}">
+          <div>
+            ${%No mojos executed.}
+          </div>
+        </j:when>
+        <j:otherwise>
+          <j:set var="cache" value="${it.createExecutedMojoCache()}"/>
+          
+          <table class="middle-align">
+            <tr>
+              <th>${%Plugin}</th>
+              <th>${%Version}</th>
+              <th>${%Goal}</th>
+              <th>${%Execution}</th>
+              <th>${%Duration}</th>
+              <th>${%Fingerprint}</th>
+            </tr>
+
+            <j:forEach var="m" items="${it.executedMojos}">
+              <tr>
+                <td>
+                  <a href="${m.getPluginLink(cache)}">
+                    <img src="${imagesURL}/24x24/gear.gif" alt=""/>
+                    ${m.groupId}:${m.artifactId}
+                  </a>
+                </td>
+                <td align="center">${m.version}</td>
+                <td>
+                  <a href="${m.getGoalLink(cache)}">
+                    ${m.goal}
+                  </a>
+                </td>
+                <td align="center">${m.readableExecutionId}</td>
+                <td>${m.durationString}</td>
+                <td align="center">
+                  <a href="${rootURL}/fingerprint/${m.digest}/"><img src="${imagesURL}/16x16/fingerprint.gif" alt="${%fingerprint}" /></a>
+                </td>
+              </tr>
+            </j:forEach>
+          </table>
+        </j:otherwise>
+      </j:choose>
+    </l:main-panel>
+  </l:layout>
+</j:jelly>
