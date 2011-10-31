@@ -41,6 +41,12 @@
     <plexus-classworlds.version>2.4</plexus-classworlds.version>
   </properties>
 
+  <scm>
+    <connection>scm:git:git://github.com/hudson-plugins/legacy-maven-support.git</connection>
+    <developerConnection>scm:git:git@github.com:hudson-plugins/legacy-maven-support.git</developerConnection>
+    <url>https://github.com/hudson-plugins/legacy-maven-support</url>
+  </scm>
+
   <modules>
     <module>maven-agent</module>
     <module>maven-interceptor</module>
