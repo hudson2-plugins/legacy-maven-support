@@ -63,6 +63,7 @@ import hudson.tasks.Publisher;
 import hudson.tasks.junit.JUnitResultArchiver;
 import hudson.util.CopyOnWriteMap;
 import hudson.util.DescribableList;
+import hudson.util.DescribableListUtil;
 import hudson.util.FormValidation;
 import hudson.util.Function1;
 
@@ -821,9 +822,12 @@ public final class MavenModuleSet extends AbstractMavenProject<MavenModuleSet,Ma
         resolveDependencies = req.hasParameter( "maven.resolveDependencies" );
         processPlugins = req.hasParameter( "maven.processPlugins" );
         mavenValidationLevel = NumberUtils.toInt( req.getParameter( "maven.validationLevel" ), -1 );
-        reporters.rebuild(req,json,MavenReporters.getConfigurableList());
-        publishers.rebuild(req,json,BuildStepDescriptor.filter(Publisher.all(),this.getClass()));
-        buildWrappers.rebuild(req,json,BuildWrappers.getFor(this));
+
+        DescribableListUtil.buildFromJson(this, req, json, MavenReporters.getConfigurableList());
+        DescribableListUtil.buildFromJson(this, req, json,
+            BuildStepDescriptor.filter(Publisher.all(), this.getClass()));
+        DescribableListUtil.buildFromJson(this, req, json, BuildWrappers.getFor(this));
+
     }
 
     /**
