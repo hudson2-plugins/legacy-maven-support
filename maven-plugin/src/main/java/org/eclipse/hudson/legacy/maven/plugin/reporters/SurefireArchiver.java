@@ -174,6 +174,7 @@ public class SurefireArchiver extends MavenReporter {
     private boolean isSurefireTest(MojoInfo mojo) {
         if ((!mojo.is("com.sun.maven", "maven-junit-plugin", "test"))
             && (!mojo.is("org.sonatype.flexmojos", "flexmojos-maven-plugin", "test-run"))
+            && (!mojo.is("com.jayway.maven.plugins.android.generation2", "maven-android-plugin", "internal-integration-test"))
             && (!mojo.is("org.apache.maven.plugins", "maven-surefire-plugin", "test"))
             && (!mojo.is("org.apache.maven.plugins", "maven-failsafe-plugin", "integration-test")))
             return false;
@@ -184,18 +185,18 @@ public class SurefireArchiver extends MavenReporter {
                 if (((skip != null) && (skip))) {
                     return false;
                 }
-                
+
                 if (mojo.pluginName.version.compareTo("2.3") >= 0) {
                     Boolean skipExec = mojo.getConfigurationValue("skipExec", Boolean.class);
-                    
+
                     if (((skipExec != null) && (skipExec))) {
                         return false;
                     }
                 }
-                
+
                 if (mojo.pluginName.version.compareTo("2.4") >= 0) {
                     Boolean skipTests = mojo.getConfigurationValue("skipTests", Boolean.class);
-                    
+
                     if (((skipTests != null) && (skipTests))) {
                         return false;
                     }
@@ -203,19 +204,24 @@ public class SurefireArchiver extends MavenReporter {
             }
             else if (mojo.is("com.sun.maven", "maven-junit-plugin", "test")) {
                 Boolean skipTests = mojo.getConfigurationValue("skipTests", Boolean.class);
-                
+
                 if (((skipTests != null) && (skipTests))) {
                     return false;
                 }
             }
             else if (mojo.is("org.sonatype.flexmojos", "flexmojos-maven-plugin", "test-run")) {
-		Boolean skipTests = mojo.getConfigurationValue("skipTest", Boolean.class);
-		
-		if (((skipTests != null) && (skipTests))) {
-		    return false;
-		}
-	    }
+		        Boolean skipTests = mojo.getConfigurationValue("skipTest", Boolean.class);
 
+                if (((skipTests != null) && (skipTests))) {
+                    return false;
+                }
+            }
+            else if (mojo.is("com.jayway.maven.plugins.android.generation2", "maven-android-plugin", "internal-integration-test")) {
+                Boolean skipTests = mojo.getConfigurationValue("skipTests", Boolean.class);
+                if (((skipTests != null) && (skipTests))) {
+                    return false;
+                }
+            }
         } catch (ComponentConfigurationException e) {
             return false;
         }
