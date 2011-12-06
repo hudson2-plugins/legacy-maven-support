@@ -13,13 +13,13 @@
     <groupId>org.jvnet.hudson.main</groupId>
     <artifactId>hudson</artifactId>
     <version>2.2.0</version>
-    <relativePath/>
+    <relativePath />
   </parent>
 
   <!-- TODO: Should really give these modules their own groupId -->
 
   <artifactId>hudson-maven-legacy</artifactId>
-  <version>2.2.0-SNAPSHOT</version>
+  <version>2.2.0</version>
   <packaging>pom</packaging>
   <name>Hudson :: Maven (legacy)</name>
   <description>Hudson Legacy Maven Integration</description>
