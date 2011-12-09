@@ -220,11 +220,11 @@ public abstract class MavenBuilder extends AbstractMavenBuilder implements Deleg
     {
         if (pluginManagerInterceptorClazz == null)
         {
-            pluginManagerInterceptorClazz = cl.loadClass( "org.eclipse.hudson.legacy.maven.agent.PluginManagerInterceptor" );
+            pluginManagerInterceptorClazz = cl.loadClass( "org.eclipse.hudson.legacy.maven.interceptor.PluginManagerInterceptor" );
         }
         Method setListenerMethod =
             pluginManagerInterceptorClazz.getMethod( "setListener",
-                                                     new Class[] { cl.loadClass( "org.eclipse.hudson.legacy.maven.agent.PluginManagerListener" ) } );
+                                                     new Class[] { cl.loadClass( "org.eclipse.hudson.legacy.maven.interceptor.PluginManagerListener" ) } );
         setListenerMethod.invoke( null, new Object[] { pluginManagerListener } );
 
         if (lifecycleInterceptorClazz == null)
