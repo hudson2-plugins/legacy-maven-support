@@ -104,6 +104,13 @@
                       instances="${it.reporters.toMap()}" />
   </j:if>
 
-  <p:config-buildWrappers />
-  <p:config-publishers />
+  <j:set var="wrappers" value="${h.getBuildWrapperDescriptors(it)}"/>
+  <j:if test="${!empty(wrappers)}">
+      <f:descriptorList title="${%Build Environment}"
+                        descriptors="${wrappers}"
+                        instances="${it.buildWrappers}"/>
+  </j:if>
+  <f:descriptorList title="${%Post-build Actions}"
+                    descriptors="${h.getPublisherDescriptors(it)}"
+                    instances="${it.publishers}"/>
 </j:jelly>
