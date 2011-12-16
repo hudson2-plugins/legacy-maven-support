@@ -40,7 +40,7 @@
           </p>
 
           <f:form method="post" action="redeploy">
-            <st:include page="/hudson/maven/RedeployPublisher/config.jelly" />
+            <st:include page="/org/eclipse/hudson/legacy/maven/plugin/RedeployPublisher/config.jelly" />
             <f:block>
               <f:submit value="${%OK}" style="margin-top:1em;" />
             </f:block>
