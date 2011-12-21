@@ -31,6 +31,7 @@
     <wagonVersion>1.0-beta-7</wagonVersion>
     <commons-httpclient.version>4.1.2</commons-httpclient.version>
     <plexus-classworlds.version>2.3</plexus-classworlds.version>
+    <maven-gpg-plugin.version>1.2</maven-gpg-plugin.version>
   </properties>
 
   <scm>
