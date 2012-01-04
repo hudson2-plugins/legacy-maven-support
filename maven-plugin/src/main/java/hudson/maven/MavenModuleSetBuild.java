@@ -2,7 +2,7 @@
  * The MIT License
  * 
  * Copyright (c) 2004-2010, Sun Microsystems, Inc., Kohsuke Kawaguchi,
- * Red Hat, Inc., Victor Glushenkov, Alan Harder, Olivier Lamy
+ * Red Hat, Inc., Victor Glushenkov, Alan Harder, Olivier Lamy, Dominik Bartholdi
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -622,7 +622,29 @@ public class MavenModuleSetBuild extends AbstractMavenBuild<MavenModuleSet,Maven
                             }
                         }
 
-                        margs.addTokenized(envVars.expand(project.getGoals()));
+                        final List<MavenArgumentInterceptorAction> argInterceptors = this.getBuild().getActions(MavenArgumentInterceptorAction.class);
+                        
+	                // find the correct maven goals and options, there might by an action overruling the defaults
+                        String goals = project.getGoals(); // default
+                        for (MavenArgumentInterceptorAction mavenArgInterceptor : argInterceptors) {
+                            final String goalsAndOptions = mavenArgInterceptor.getGoalsAndOptions((MavenModuleSetBuild) this.getBuild());
+                            if (StringUtils.isNotBlank(goalsAndOptions)) {
+                                goals = goalsAndOptions;
+                                // only one interceptor is allowed to overwrite the whole "goals and options" string
+                                break;
+                            }
+                        }
+                        margs.addTokenized(envVars.expand(goals));
+
+                        // enable the interceptors to change the whole command argument list
+                        // all available interceptors are allowed to modify the argument list
+                        for (MavenArgumentInterceptorAction mavenArgInterceptor : argInterceptors) {
+                            final ArgumentListBuilder newMargs = mavenArgInterceptor.intercept(margs, (MavenModuleSetBuild) this.getBuild());
+                            if (newMargs != null) {
+                                margs = newMargs;
+                            }
+                        }
+                        
                         if (maven3orLater)
                         {   
                             
