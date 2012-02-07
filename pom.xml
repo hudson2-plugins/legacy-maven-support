@@ -25,6 +25,7 @@
   <description>Hudson Legacy Maven Integration</description>
 
   <properties>
+    <hudson.core.version>2.2.0</hudson.core.version>
     <mavenVersion>3.0.2</mavenVersion>
     <maven.version>${mavenVersion}</maven.version>
     <aetherVersion>${aether.version}</aetherVersion>
