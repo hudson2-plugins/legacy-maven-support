@@ -224,13 +224,14 @@ public class MavenModuleSetBuild extends AbstractMavenBuild<MavenModuleSet,Maven
              * Does this change happen somewhere in the given module or its descendants?
              */
             private boolean isDescendantOf(ChangeLogSet.Entry e, MavenModule mod) {
-                try {
-                    for (String path : e.getAffectedPaths()) {
+                for (String path : e.getAffectedPaths()) {
+                    try {
                         if (FilenameUtils.separatorsToUnix(path).startsWith(FilenameUtils.normalize(mod.getRelativePath())))
                             return true;
+                    } catch(NoSuchElementException ex) {
+                        // Skip this and test rest of the affected files
+                        LOGGER.log(Level.WARNING, "Error while testing descendant of due to parsing path " + path + ". Error parsing revision: "+e.getCurrentRevision());
                     }
-                } catch(NoSuchElementException ex) {
-                    return false;
                 }
                 return false;
             }
