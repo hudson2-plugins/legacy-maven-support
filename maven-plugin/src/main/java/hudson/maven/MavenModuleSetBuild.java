@@ -79,6 +79,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -224,8 +225,13 @@ public class MavenModuleSetBuild extends AbstractMavenBuild<MavenModuleSet,Maven
              */
             private boolean isDescendantOf(ChangeLogSet.Entry e, MavenModule mod) {
                 for (String path : e.getAffectedPaths()) {
-                    if (FilenameUtils.separatorsToUnix(path).startsWith(FilenameUtils.normalize(mod.getRelativePath())))
-                        return true;
+                    try {
+                        if (FilenameUtils.separatorsToUnix(path).startsWith(FilenameUtils.normalize(mod.getRelativePath())))
+                            return true;
+                    } catch(NoSuchElementException ex) {
+                        // Skip this and test rest of the affected files
+                        LOGGER.log(Level.WARNING, "Error while testing descendant of due to parsing path " + path + ". Error parsing revision: "+e.getCurrentRevision());
+                    }
                 }
                 return false;
             }
